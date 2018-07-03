@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+	  *{
+	  margin:0
+	  padding:0
+	  }
+      #map {
+        width: 100%;
+		height: 440px;
+       }
+	   p span {
+		display: block;
+	   }
+    </style>
+	<title>map</title>
+  </head>
+  <body onload="initMap()">
+    <h3>Konwerter odleglosci miedzy dwoma miastami</h3>
+    <div id="map"></div>
+	<div>
+	<p><span>
+	<label>Wprowadz 1 miasto:
+    <input id="address1" type="textbox" value=""></label>
+    <input type="button" value="Lokalizuj" onclick="codeAddress(1)">
+	<label>szerokosc geograficzna:
+	<input id="latitiude1" size="35" type="textbox"></label>
+	<label>dlugosc geograficzna:
+	<input id="longitiude1" size="35" type="textbox"></label>
+	</span>
+	<span>
+	--------------------------------------------------------------------------------------------------------------------------------------------</span>
+	<span>
+	<label>Wprowadz 2 miasto:
+    <input id="address2" type="textbox" value=""></label>
+    <input type="button" value="Lokalizuj" onclick="codeAddress(2)">
+	<label>szerokosc geograficzna:
+	<input id="latitiude2" size="35" type="textbox"></label>
+	<label>dlugosc geograficzna:
+	<input id="longitiude2" size="35" type="textbox"></label>
+	<span>
+	--------------------------------------------------------------------------------------------------------------------------------------------</span>
+	<span>
+	<span>
+	<label>Odleglosc miedzy miastami w kilometrach:<input type="text" id="result" size="54"></label>
+	<input type="button" value="Oblicz" onclick="CountDistance()">
+	</span>
+	</span></p>
+	</div>
+    <script>
+	var geocoder;
+	var map;
+	
+	function initMap() {
+	geocoder = new google.maps.Geocoder();
+	var location = {lat: 51.919438, lng:19.145136 };
+	map = new google.maps.Map(
+      document.getElementById("map"), {zoom: 4, center: location});
+	}
+	
+	function codeAddress(which) {
+		var address = document.getElementById('address'.concat(which)).value;
+		geocoder.geocode({'address': address}, function(results, status) {
+		if (status == 'OK') {
+        map.setCenter(results[0].geometry.location);
+		var marker = new google.maps.Marker({map: map,position: results[0].geometry.location})
+		var localization=document.getElementById('latitiude'.concat(which)).value = results[0].geometry.location.lat();
+		var localization=document.getElementById('longitiude'.concat(which)).value = results[0].geometry.location.lng();
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+	}
+	
+	function CountDistance(){
+    var lat1=document.getElementById('latitiude1').value;
+	var lat2=document.getElementById('latitiude2').value;
+	var lon1=document.getElementById('longitiude1').value;
+	var lon2=document.getElementById('longitiude2').value;
+	var R = 6378.137; // Radius of earth in KM
+    var dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
+    var dLon = lon2 * Math.PI / 180 - lon1 * Math.PI / 180;
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c;
+	var result=document.getElementById('result').value=d
+	}
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSw0ZV0UQ4lhA8bUo6iKAK0QsS9UXt1vo&callback=initMap">
+    </script>
+  </body>
+</html
