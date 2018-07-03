@@ -1,20 +1,12 @@
-<!DOCTYPE html>
 <html>
-  <head>
-    <style>
-	  *{
-	  margin:0
-	  padding:0
-	  }
-      #map {
-        width: 100%;
-		height: 440px;
-       }
-	   p span {
-		display: block;
-	   }
-    </style>
+  <head lang="pl">
+	<meta charset="utf-8" />
+	<meta name="description" content="Storna pozwala na odnaleźienie współżędnych oraz odległości między miastami" />
+	<meta name="keywords" content="Mapa,Konwerter" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<link rel="stylesheet" href="css/style.css" "type/css"/>
 	<title>map</title>
+	<script src="js/script.js"></script>
   </head>
   <body onload="initMap()">
     <h3>Konwerter odleglosci miedzy dwoma miastami</h3>
@@ -48,47 +40,6 @@
 	</span>
 	</span></p>
 	</div>
-    <script>
-	var geocoder;
-	var map;
-	
-	function initMap() {
-	geocoder = new google.maps.Geocoder();
-	var location = {lat: 51.919438, lng:19.145136 };
-	map = new google.maps.Map(
-      document.getElementById("map"), {zoom: 4, center: location});
-	}
-	
-	function codeAddress(which) {
-		var address = document.getElementById('address'.concat(which)).value;
-		geocoder.geocode({'address': address}, function(results, status) {
-		if (status == 'OK') {
-        map.setCenter(results[0].geometry.location);
-		var marker = new google.maps.Marker({map: map,position: results[0].geometry.location})
-		var localization=document.getElementById('latitiude'.concat(which)).value = results[0].geometry.location.lat();
-		var localization=document.getElementById('longitiude'.concat(which)).value = results[0].geometry.location.lng();
-      } else {
-        alert('Geocode was not successful for the following reason: ' + status);
-      }
-    });
-	}
-	
-	function CountDistance(){
-    var lat1=document.getElementById('latitiude1').value;
-	var lat2=document.getElementById('latitiude2').value;
-	var lon1=document.getElementById('longitiude1').value;
-	var lon2=document.getElementById('longitiude2').value;
-	var R = 6378.137; // Radius of earth in KM
-    var dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
-    var dLon = lon2 * Math.PI / 180 - lon1 * Math.PI / 180;
-    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-    Math.sin(dLon/2) * Math.sin(dLon/2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    var d = R * c;
-	var result=document.getElementById('result').value=d
-	}
-    </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSw0ZV0UQ4lhA8bUo6iKAK0QsS9UXt1vo&callback=initMap">
     </script>
