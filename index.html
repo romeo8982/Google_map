@@ -9,9 +9,22 @@
 	<script src="js/script.js"></script>
   </head>
   <body onload="initMap()">
-    <h3>Konwerter odleglosci miedzy dwoma miastami</h3>
+	<div id="all">
+	<div id="header">
+    Konwerter odleglosci miedzy dwoma miastami
+	</div>
     <div id="map"></div>
-	<div>
+	<div id="menu">
+	<div id="metric">
+    <label>Kilometry</label>
+    <input type='checkbox' checked="checked">
+    <label>Mile</label>
+    <input type='checkbox'>
+	<label>Mile Morskie</label>
+    <input type='checkbox'>
+	<label>Lata Świetlne</label>
+    <input type='checkbox'>
+	</div>
 	<p><span>
 	<label>Wprowadz 1 miasto:
     <input id="address1" type="textbox" value=""></label>
@@ -39,6 +52,7 @@
 	<input type="button" value="Oblicz" onclick="CountDistance()">
 	</span>
 	</span></p>
+	</div>
 	</div>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSw0ZV0UQ4lhA8bUo6iKAK0QsS9UXt1vo&callback=initMap">
